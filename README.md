@@ -1,10 +1,10 @@
 # Sistema-de-Cadastro-de-Alunos
 Projeto apresentado pelo professor Felipe na materia de engenharia de software. O intuito é para desenvolver a parte de desenvolvimento na parte de software dos alunos.
 
-## 1 - Visão Geral do Software
+# 1 - Visão Geral do Software
 O sistema de Cadastro de Alunos foi construindo sob um ambiente web desenvolvido em PHP e estruturado em HTML e Bootstrap, e utilizando-se do XAMPP que é uma junção de quatro tecnologias: Apache (cria um servidor web local), MySQL (sistema de gerenciamento de banco de dados relacional), PHP (linguagem de programação voltada para o desenvolvimento de aplicações para a web) e Perl (linguagem de programação usada para criar scripts e aplicações). Sua finalidade é de cadastrar os alunos de qualquer instituição de ensino, além de realizar uma busca por CPF ou Matrícula no banco de dados e mostrar os dados do aluno cadastrado e exportar um relatório em JSON ou XML.
 
-#2 - Requisitos para Desenvolvimento
+# 2 - Requisitos para Desenvolvimento
   . Sistema Operacional: Windows
   . Navegador: Chrome, Firefox, Edge
   . Versão PHP: v8.0 ou superior
