@@ -14,30 +14,25 @@ O sistema de Cadastro de Alunos foi construindo sob um ambiente web desenvolvido
 # 3 - Arquitetura do Sistema
   A arquitetura do sistema segue o padrão MVC (Model-View-Controller), garantindo organização e separação de  responsabilidades para melhor manutenção e escalabilidade.
 
-Model (Modelo)
+## Model (Modelo)
 O modelo gerencia a estrutura de dados e interage diretamente com o banco MySQL. O sistema utiliza PHP para realizar consultas, inserções e recuperação de dados dos alunos no banco student_registration. Arquivos principais:
 
-config.php: Responsável pela conexão segura com o banco de dados.
+* config.php: Responsável pela conexão segura com o banco de dados.
+* Tabelas do MySQL: Armazenam informações dos alunos, incluindo nome, CPF, matrícula, CEP, endereço e telefone.
 
-Tabelas do MySQL: Armazenam informações dos alunos, incluindo nome, CPF, matrícula, CEP, endereço e telefone.
-
-*View (Visualização)*
+## View (Visualização)
 A interface do usuário foi desenvolvida utilizando HTML, Bootstrap e PHP, garantindo uma experiência visual moderna e responsiva. Componentes da view:
 
-Cadastro de alunos: Formulário estilizado que permite inserção de informações.
+* Cadastro de alunos: Formulário estilizado que permite inserção de informações.
+* Busca de alunos: Exibe os dados em tabela com cores escuras e ciano como principal.
+* Exportação de relatórios: Gera arquivos JSON ou XML com todos os alunos cadastrados.
 
-Busca de alunos: Exibe os dados em tabela com cores escuras e ciano como principal.
-
-Exportação de relatórios: Gera arquivos JSON ou XML com todos os alunos cadastrados.
-
-Controller (Controle)
+## Controller (Controle)
 O controle gerencia a comunicação entre Model e View, processando as entradas do usuário e enviando os dados necessários. Principais funções:
 
-Cadastro (cadastro.php): Insere novos alunos no banco de dados.
-
-Busca (busca.php): Recupera e exibe alunos baseados em CPF ou matrícula.
-
-Exportação (export.php): Gera relatórios completos em XML ou JSON, acessíveis via links na interface.
+* Cadastro (cadastro.php): Insere novos alunos no banco de dados.
+* Busca (busca.php): Recupera e exibe alunos baseados em CPF ou matrícula.
+* Exportação (export.php): Gera relatórios completos em XML ou JSON, acessíveis via links na interface.
 
 Tecnologias utilizadas
 Backend: PHP
