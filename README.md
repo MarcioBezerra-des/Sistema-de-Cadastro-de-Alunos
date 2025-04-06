@@ -67,7 +67,11 @@ CREATE TABLE student_registration (
     endereco VARCHAR(255),
     telefone VARCHAR(15)
 );
+
+![image](https://github.com/user-attachments/assets/50902611-97f3-449c-b016-908f2f699422)
+
 ```
+
 ### Código do Cadastro dos Alunos (cadastro.php)
 ````
 <?php
