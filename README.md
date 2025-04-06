@@ -41,17 +41,18 @@ Tecnologias utilizadas
 
 ## 4 - Como fazer a instalação?
 
-### * Estrutura do Sistema
+
+
+### Estrutura do Sistema
 ````
 /sistema_cadastro
-  |-- index.php
+  |-- Criação do Banco de Dados
+  |-- cadastro.php
   |-- config.php
-  |-- gerador_arquivo.php
   |-- style.css
   |-- buscar_alunos.php
 ````
-
-### * Banco de Dados
+### Banco de Dados
 ```
 //Código em SQL para criar o Banco de Dados no MySQL
 
@@ -67,8 +68,7 @@ CREATE TABLE student_registration (
     telefone VARCHAR(15)
 );
 ```
-
-### * Código do Cadastro dos Alunos (cadastro.php)
+### Código do Cadastro dos Alunos (cadastro.php)
 ````
 <?php
 include 'config.php';
@@ -90,4 +90,159 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 ````
+### Conexão entre o Código e o Banco de Dados (config.php)
+````
+<?php
+$host = 'localhost';
+$dbname = 'student_registration';
+$user = 'root';
+$pass = '';
+
+// Criando a conexão
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erro na conexão: " . $e->getMessage());
+}
+?>
+````
+### Código de Busca de Alunos (busca.php)
+````
+<?php
+include 'config.php';
+
+$busca = $_GET["busca"] ?? '';
+
+$stmt = $pdo->prepare("SELECT * FROM student_registration WHERE cpf = ? OR matricula = ?");
+$stmt->execute([$busca, $busca]);
+$aluno = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($aluno) {
+    echo '<h3 class="text-cyan mt-4">Dados do Aluno</h3>';
+    echo '<table class="table table-dark table-striped border border-cyan">';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>Nome</th>';
+    echo '<th>CPF</th>';
+    echo '<th>Matrícula</th>';
+    echo '<th>CEP</th>';
+    echo '<th>Endereço</th>';
+    echo '<th>Telefone</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+    echo '<tr>';
+    echo '<td>' . $aluno["nome"] . '</td>';
+    echo '<td>' . $aluno["cpf"] . '</td>';
+    echo '<td>' . $aluno["matricula"] . '</td>';
+    echo '<td>' . $aluno["cep"] . '</td>';
+    echo '<td>' . $aluno["endereco"] . '</td>';
+    echo '<td>' . $aluno["telefone"] . '</td>';
+    echo '</tr>';
+    echo '</tbody>';
+    echo '</table>';
+} else {
+    echo '<p class="text-danger">Nenhum aluno encontrado.</p>';
+}
+?>
+````
+### Gerador de XML e JSON
+````
+<?php
+include 'config.php';
+
+$formato = $_GET["formato"] ?? 'json';
+
+$stmt = $pdo->query("SELECT * FROM student_registration");
+$alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($formato === 'xml') {
+    header("Content-Type: application/xml");
+    $xml = new SimpleXMLElement("<alunos/>");
+
+    foreach ($alunos as $aluno) {
+        $item = $xml->addChild("aluno");
+        foreach ($aluno as $key => $value) {
+            $item->addChild($key, $value);
+        }
+    }
+
+    echo $xml->asXML();
+} else {
+    header("Content-Type: application/json");
+    echo json_encode($alunos, JSON_PRETTY_PRINT);
+}
+?>
+````
+### Estrutura do sistema (HTML) e o Estilo (BOOTSTRAP) (index.html)
+````
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro de Alunos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <meta charset="UTF-8">
+</head>
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <h1 class="text-cyan">Cadastro de Alunos</h1>
+
+        <!-- Formulário de Cadastro -->
+        <form method="post" action="cadastro.php" class="border p-4 rounded bg-secondary">
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-control" name="nome">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">CPF</label>
+                <input type="text" class="form-control" name="cpf">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Matrícula</label>
+                <input type="text" class="form-control" name="matricula">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">CEP</label>
+                <input type="text" class="form-control" name="cep">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Endereço</label>
+                <input type="text" class="form-control" name="endereco">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefone</label>
+                <input type="text" class="form-control" name="telefone">
+            </div>
+            <button type="submit" class="btn btn-cyan">Cadastrar</button>
+        </form>
+
+        <!-- Aba de Busca de Aluno -->
+        <h2 class="text-cyan mt-4">Buscar Aluno</h2>
+        <form method="get" action="busca.php" class="border p-3 rounded bg-secondary">
+            <label class="form-label">CPF/Matrícula:</label>
+            <input type="text" name="busca" class="form-control">
+            <button type="submit" class="btn btn-cyan mt-2">Buscar</button>
+        </form>
+
+        <!-- Botões de Exportação -->
+        <h2 class="text-cyan mt-4">Exportar Relatórios</h2>
+        <a href="export.php?formato=json" class="btn btn-cyan">Baixar JSON</a>
+        <a href="export.php?formato=xml" class="btn btn-cyan">Baixar XML</a>
+    </div>
+
+    <style>
+        .text-cyan { color: #00FFFF; }
+        .btn-cyan { background-color: #00FFFF; color: #000; border: none; }
+        .btn-cyan:hover { background-color: #008B8B; }
+        .table-dark { background-color: #001F3F; color: #00FFFF; }
+        .border-cyan { border: 2px solid #00FFFF; }
+        th, td { padding: 10px; text-align: center; }
+    </style>
+</body>
+</html>
+````
+
+
+![image](https://github.com/user-attachments/assets/50902611-97f3-449c-b016-908f2f699422)
 
