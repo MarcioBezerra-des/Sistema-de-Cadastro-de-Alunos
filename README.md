@@ -39,7 +39,20 @@ Tecnologias utilizadas
 * Frontend: HTML, Bootstrap e PHP
 * Banco de Dados: MySQL
 
-```bash
+## 4 - Como fazer a instalação?
+
+### * Estrutura do Sistema
+````
+/sistema_cadastro
+  |-- index.php
+  |-- config.php
+  |-- gerador_arquivo.php
+  |-- style.css
+  |-- buscar_alunos.php
+````
+
+### * Banco de Dados
+```
 //Código em SQL para criar o Banco de Dados no MySQL
 
 create database student_registration
@@ -54,3 +67,27 @@ CREATE TABLE student_registration (
     telefone VARCHAR(15)
 );
 ```
+
+### * Código do Cadastro dos Alunos (cadastro.php)
+````
+<?php
+include 'config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nome = $_POST["nome"];
+    $cpf = $_POST["cpf"];
+    $matricula = $_POST["matricula"];
+    $cep = $_POST["cep"];
+    $endereco = $_POST["endereco"];
+    $telefone = $_POST["telefone"];
+
+    $stmt = $pdo->prepare("INSERT INTO student_registration (nome, cpf, matricula, cep, endereco, telefone) VALUES (?, ?, ?, ?, ?, ?)");
+    if ($stmt->execute([$nome, $cpf, $matricula, $cep, $endereco, $telefone])) {
+        echo "Aluno cadastrado com sucesso!";
+    } else {
+        echo "Erro ao cadastrar.";
+    }
+}
+?>
+````
+
