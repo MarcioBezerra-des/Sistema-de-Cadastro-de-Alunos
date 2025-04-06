@@ -38,3 +38,19 @@ Tecnologias utilizadas
 * Backend: PHP
 * Frontend: HTML, Bootstrap e PHP
 * Banco de Dados: MySQL
+
+```bash
+//Código em SQL para criar o Banco de Dados no MySQL
+
+create database student_registration
+
+CREATE TABLE student_registration (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255),
+    cpf VARCHAR(11) UNIQUE,
+    matricula VARCHAR(20) UNIQUE,
+    cep VARCHAR(10),
+    endereco VARCHAR(255),
+    telefone VARCHAR(15)
+);
+```
