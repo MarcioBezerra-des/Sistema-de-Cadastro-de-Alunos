@@ -67,11 +67,7 @@ CREATE TABLE student_registration (
     endereco VARCHAR(255),
     telefone VARCHAR(15)
 );
-
-![image](https://github.com/user-attachments/assets/50902611-97f3-449c-b016-908f2f699422)
-
 ```
-
 ### Código do Cadastro dos Alunos (cadastro.php)
 ````
 <?php
@@ -247,6 +243,14 @@ if ($formato === 'xml') {
 </html>
 ````
 
+## 5 - Sistema em Funcionamento
 
-![image](https://github.com/user-attachments/assets/50902611-97f3-449c-b016-908f2f699422)
+![Captura de tela 2025-04-05 210354](https://github.com/user-attachments/assets/c722c207-c051-4273-988d-0c38eda2c254)
+![Captura de tela 2025-04-05 210437](https://github.com/user-attachments/assets/d9863f03-4b1b-4ff3-be1d-5af733556d2f)
+![Captura de tela 2025-04-05 205846](https://github.com/user-attachments/assets/04314b9f-4d4f-4a34-a8fd-d24d24c7693e)
+![Captura de tela 2025-04-05 210408](https://github.com/user-attachments/assets/bef61029-49b0-4713-a442-a2b2fc1be765)
+![Captura de tela 2025-04-05 210420](https://github.com/user-attachments/assets/687c64e2-5564-4ad7-a580-39a4e477b58e)
 
+## 7 - Conclusão
+
+Esse projeto de criar um sistema para cadastrar os alunos e realizar sua documentação foi planejado para desenvolver a habilidade e o conhecimento na criação de um sistema por meio de um trabalho acadêmico ministrada pelo professor Felipe Douglas Machado da Cunha, na Universidade Cuiabá - UNIC da disciplina de Engenharia de Software do Curso de Ciência da Computação no 3º Semestre.
